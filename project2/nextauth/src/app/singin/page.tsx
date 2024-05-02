@@ -2,16 +2,27 @@
 import Link from "next/link";
 import React from "react";
 import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 const Signin = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
+    const router = useRouter();
 
-    const submitHandler = (e: React.FormEvent) =>{
+    const submitHandler = async(e: React.FormEvent) =>{
         e.preventDefault();
-        console.log(email, password, username);
+        try {
+            const res = await axios.post(`/api/singup`, {email, password, username});
+            if(res?.data?.success){
+                router.push("/login")
+            }
+            
+        } catch (error) {
+            console.log(error);
+        }
     }
 
   return (

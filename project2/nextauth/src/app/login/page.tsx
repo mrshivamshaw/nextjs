@@ -1,15 +1,25 @@
 "use client"
+import axios from "axios";
 import Link from "next/link";
 import React from "react";
 import { useState } from "react";
+import {useRouter} from 'next/navigation'
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const router = useRouter()
 
-    const submitHandler = (e: React.FormEvent) =>{
+    const submitHandler = async(e: React.FormEvent) =>{
         e.preventDefault();
-        console.log(username, password);
+        try {
+            const res = await axios.post("/api/login", {password, username});
+            if(res?.data?.success){
+                router.push("/")
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
   return (

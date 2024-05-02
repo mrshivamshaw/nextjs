@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 
-export default connectDB = async () => {
+ const connectDB = async () => {
     try {
-        const connection = await mongoose.connect(process.env.MONGO_URI, {
+        const connection = await mongoose.connect(process.env.DB_URI, {
             useUnifiedTopology: true,   
             useNewUrlParser: true
         })
@@ -11,3 +11,5 @@ export default connectDB = async () => {
         console.log("DB connection failed", error);
     }
 }
+
+export default connectDB
